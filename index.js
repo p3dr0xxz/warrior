@@ -1,6 +1,6 @@
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('fs');
-const { token } = require('./config.json');
+require('dotenv').config(); // 👈 IMPORTANTE
 
 const client = new Client({
   intents: [
@@ -19,11 +19,17 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
-// eventos
+// carregar eventos
 const eventFiles = fs.readdirSync('./events').filter(f => f.endsWith('.js'));
 for (const file of eventFiles) {
   const event = require(`./events/${file}`);
-  client.once(event.name, (...args) => event.execute(...args));
+
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
+  }
 }
 
-client.login(token);
+// login com ENV
+client.login(process.env.DISCORD_TOKEN);

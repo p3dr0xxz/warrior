@@ -15,39 +15,48 @@ module.exports = {
     if (interaction.isButton()) {
 
       // ABRIR TICKET
-      if (interaction.customId === 'abrir_ticket') {
-        const guild = interaction.guild;
-        const user = interaction.user;
+     // ABRIR TICKET
+if (interaction.customId === 'abrir_ticket') {
+  await interaction.deferReply({ ephemeral: true });
 
-        const channel = await guild.channels.create({
-          name: `ticket-${user.username}`,
-          type: ChannelType.GuildText,
-          permissionOverwrites: [
-            {
-              id: guild.id,
-              deny: [PermissionFlagsBits.ViewChannel]
-            },
-            {
-              id: user.id,
-              allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages]
-            }
-          ]
-        });
+  const guild = interaction.guild;
+  const user = interaction.user;
 
-        const closeButton = new ButtonBuilder()
-          .setCustomId('fechar_ticket')
-          .setLabel('🔒 Fechar Ticket')
-          .setStyle(ButtonStyle.Danger);
-
-        const row = new ActionRowBuilder().addComponents(closeButton);
-
-        await channel.send({
-          content: `Olá ${user}, descreva seu problema.`,
-          components: [row]
-        });
-
-        await interaction.reply({ content: '✅ Ticket criado!', ephemeral: true });
+  const channel = await guild.channels.create({
+    name: `ticket-${user.username}`,
+    type: ChannelType.GuildText,
+    permissionOverwrites: [
+      {
+        id: guild.id,
+        deny: [PermissionFlagsBits.ViewChannel]
+      },
+      {
+        id: user.id,
+        allow: [
+          PermissionFlagsBits.ViewChannel,
+          PermissionFlagsBits.SendMessages
+        ]
       }
+    ]
+  });
+
+  const closeButton = new ButtonBuilder()
+    .setCustomId('fechar_ticket')
+    .setLabel('🔒 Fechar Ticket')
+    .setStyle(ButtonStyle.Danger);
+
+  const row = new ActionRowBuilder().addComponents(closeButton);
+
+  await channel.send({
+    content: `Olá ${user}, descreva seu problema.`,
+    components: [row]
+  });
+
+  await interaction.editReply({
+    content: '✅ Ticket criado com sucesso!'
+  });
+}
+
 
       // FECHAR TICKET
       if (interaction.customId === 'fechar_ticket') {
