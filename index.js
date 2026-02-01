@@ -33,3 +33,5 @@ for (const file of eventFiles) {
 
 // login com ENV
 client.login(process.env.DISCORD_TOKEN);
+
+// teste de commit
