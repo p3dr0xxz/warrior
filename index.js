@@ -1,6 +1,6 @@
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('fs');
-require('dotenv').config(); // 👈 IMPORTANTE
+require('dotenv').config();
 
 const client = new Client({
   intents: [
@@ -13,14 +13,14 @@ const client = new Client({
 client.commands = new Collection();
 
 // carregar comandos
-const commandFiles = fs.readdirSync('./commands').filter(f => f.endsWith('.js'));
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.data.name, command);
 }
 
 // carregar eventos
-const eventFiles = fs.readdirSync('./events').filter(f => f.endsWith('.js'));
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 for (const file of eventFiles) {
   const event = require(`./events/${file}`);
 
@@ -31,7 +31,6 @@ for (const file of eventFiles) {
   }
 }
 
-// login com ENV
-client.login(process.env.DISCORD_TOKEN);
+client.login(process.env.TOKEN);
 
-// teste de commit
+console.log('bot rodando');

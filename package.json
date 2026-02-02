@@ -12,6 +12,15 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "discord.js": "^14.25.1"
-  }
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/p3dr0xxz/warrior.git"
+  },
+  "bugs": {
+    "url": "https://github.com/p3dr0xxz/warrior/issues"
+  },
+  "homepage": "https://github.com/p3dr0xxz/warrior#readme"
 }
